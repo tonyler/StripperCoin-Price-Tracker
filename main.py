@@ -1,7 +1,7 @@
 import discord
 import asyncio
 import os
-from priceAPI import get_price
+from minswap_price import get_price
 from ranstatus import random_status
 
 intents = discord.Intents.default()
@@ -11,20 +11,13 @@ client = discord.Client(intents=discord.Intents.default())
 
 
 
-async def send_update(price,unit):
-        price = round(price,4)
-        nickname = f'{price}₳'
-        status=random_status()
-        guild = client.get_guild(800875066182205490)
+async def send_update(price,server_id):
+        nickname = f'{price}₳' #the price is in ADA
+        guild = client.get_guild(server_id)
 
         if guild:
             try:
                 await guild.me.edit(nick=nickname)
-                await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=status))
-
-                print(price,"₳",end=" ")
-                print(status,"\n******************")
-
             except Exception as e:
                 print(f"An error occurred while changing nickname: {repr(e)}")
         else:
@@ -33,15 +26,23 @@ async def send_update(price,unit):
 
 @client.event
 async def on_ready():
+        try:
+            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Minswap DEX"))
 
-        Stripper = 0
-        Ada = 0
+            while True:
 
-        while True:
-            Stripper, Ada = get_price (Stripper,Ada)
-            price = Stripper
-            await send_update (price, "₳")
-            await asyncio.sleep (120)
+                    price = 0
+                    price = get_price (price) #if there's an error, the bot will show 0 in Discord
+                    price = round(price,4)
+                    print(f"New price: {price}₳")
+
+                    for guild in client.guilds:
+                        print (f"Updating data for {guild.name}")
+                        await send_update (price, guild.id)
+                    print ("***************************")
+                    await asyncio.sleep (120)
+        except: 
+            print ("The bot has not joined any discord server yet!")
 
 bot_key = os.environ.get("DISCORD_KEY")
 client.run(bot_key)
