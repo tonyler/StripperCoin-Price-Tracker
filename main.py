@@ -2,14 +2,10 @@ import discord
 import asyncio
 import os
 from minswap_price import get_price
-from ranstatus import random_status
 
 intents = discord.Intents.default()
 intents.presences = True
-
 client = discord.Client(intents=discord.Intents.default())
-
-
 
 async def send_update(price,server_id):
         nickname = f'{price}₳' #the price is in ADA
@@ -28,13 +24,11 @@ async def send_update(price,server_id):
 async def on_ready():
         try:
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Minswap DEX"))
-
             while True:
-
                     price = 0
                     price = get_price (price) #if there's an error, the bot will show 0 in Discord
                     price = round(price,4)
-                    print(f"New price: {price}₳")
+                    print (f"New price: {price}₳")
 
                     for guild in client.guilds:
                         print (f"Updating data for {guild.name}")
