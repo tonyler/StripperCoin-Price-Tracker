@@ -26,7 +26,7 @@ async def on_ready():
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Minswap DEX"))
             while True:
                     price = 0
-                    price = get_price (price) #if there's an error, the bot will show 0 in Discord
+                    price = get_price (price) #if there's an error, the bot will show 0 or the price 2 minutes ago.
                     price = round(price,4)
                     print (f"New price: {price}₳")
 
