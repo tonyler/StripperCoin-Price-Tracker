@@ -1,4 +1,4 @@
-# StripperCoin-Price-Tracker
+# StripperCoin-Discord-Tracker
 A discord bot made for StripperCoin's server by me.
 
 This is a sidebar bot that changes its username reqularly to StripperCoin's LIVE price in Ada. 
