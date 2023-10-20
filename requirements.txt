@@ -1,0 +1,4 @@
+discord.py==2.2.2
+minswap-py==0.2.1
+requests==2.25.1
+
