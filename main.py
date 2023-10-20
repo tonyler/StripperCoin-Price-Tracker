@@ -32,7 +32,7 @@ async def on_ready():
                         print (f"Updating data for {guild.name}")
                         await send_update (price, guild.id)
             else:
-                print ("The bot isn't a member of any server yet!)
+                print ("The bot isn't a member of any server yet!")
                        
             print ("***************************")
             await asyncio.sleep (120)
